@@ -12,9 +12,12 @@ npm install
 # correr servidor
 
 ```
-node app
+npm start
 ```
 
+```
+node app.js
+```
 
 # Petición
 
