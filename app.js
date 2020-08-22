@@ -6,7 +6,7 @@ const request = require('request').defaults({
 const cheerio = require('cheerio');
 
 const app = express();
-const port = process.env.port || 3000;
+const port = process.env.PORT || 3000;
 const clean = str => str.replace(/\s+/g, ' ');
 const urlCode = 'http://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/captcha?accion=random';
 const urlPost = 'http://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias';
