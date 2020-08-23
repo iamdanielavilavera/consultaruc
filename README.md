@@ -25,7 +25,7 @@ node app.js
 http://localhost:3000/
 ```
 
-request:
+request POST:
 ```json
 {
     "ruc" : "20254138577"
