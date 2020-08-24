@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const request = require('request').defaults({
 	jar: true,
 	encoding: 'binary'
@@ -11,6 +12,7 @@ const clean = str => str.replace(/\s+/g, ' ');
 const urlCode = 'http://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/captcha?accion=random';
 const urlPost = 'http://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias';
 
+app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
