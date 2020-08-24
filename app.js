@@ -12,7 +12,7 @@ const clean = str => str.replace(/\s+/g, ' ');
 const urlCode = 'http://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/captcha?accion=random';
 const urlPost = 'http://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias';
 
-app.use(cors());
+app.use(cors({origin: '*', optionsSuccessStatus: 200}));
 app.use(express.json());
 
 app.get('/', (req, res) => {
