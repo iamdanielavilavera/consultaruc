@@ -54,7 +54,23 @@ app.post('/', (req, res) => {
 								});
 							}
 						});
-						res.json(resp);
+						
+						var entity = {};
+
+						for(var i = 0; i < resp.length; i++){
+	                        var item = resp[i];
+	                          if(item.name.indexOf('Número de RUC') !== -1){
+	                            var split = item.value.split('-');
+	                            entity.ciu = split[0].trim();
+	                            entity.business_name = split[1].trim();
+	                          }else if(item.name.indexOf('Nombre Comercial') !== -1){
+	                            entity.trade_name = item.value.trim();
+	                          }else if(item.name.indexOf('Dirección del Domicilio Fiscal') !== -1){
+	                          	entity.address = item.value.trim().split("-").map(function (splited) {return splited.trim();}).join("-");
+	                          }
+	                      }
+
+						res.json(entity);
 					} else {
 						res.status(500).json({
 							error: 'Error al buscar el RUC en SUNAT'
