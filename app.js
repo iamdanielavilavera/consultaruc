@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
 	if(typeof req.body.ruc === 'undefined' || req.body.ruc === null){
 		res.status(500).json({
-			error: 'No ha enviado el RUC a buscar'
+			message: 'No ha enviado el RUC a buscar'
 		});
 	}else{
 		request(urlCode, (err, response, code) => {
@@ -67,19 +67,27 @@ app.post('/', (req, res) => {
 	                            entity.trade_name = item.value.trim();
 	                          }else if(item.name.indexOf('Dirección del Domicilio Fiscal') !== -1){
 	                          	entity.address = item.value.trim().split("-").map(function (splited) {return splited.trim();}).join("-");
+	                          }else if(item.name.indexOf('Dirección del Domicilio Fiscal') !== -1){
 	                          }
-	                      }
+	                     }
 
-						res.json(entity);
+	                     if(entity.ciu){
+	                     	res.json(entity);
+	                     }else{
+	                     	res.status(400).json({
+								message: 'RUC no encontrado'
+							});
+	                     }
+						
 					} else {
 						res.status(500).json({
-							error: 'Error al buscar el RUC en SUNAT'
+							message: 'Error al buscar el RUC en SUNAT'
 						});
 					}
 				});
 			} else {
 				res.status(500).json({
-					error: 'Error al buscar el RUC en SUNAT'
+					message: 'Error al buscar el RUC en SUNAT'
 				});
 			}
 		});
