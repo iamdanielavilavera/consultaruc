@@ -42,32 +42,39 @@ app.post('/', (req, res) => {
 						let resp = [];
 						$table.find('tr').each((i, el) => {
 							$tds = $(el).children('td');
-							resp.push({
-								name: clean($tds.eq(0).text()),
-								value: clean($tds.eq(1).text())
-							});
-							// si hay filas con 4 tds
-							if ($tds.length === 4) {
+							if($tds.length === 2 || $tds.length === 3){
+								resp.push({
+									name: clean($tds.eq(0).text()),
+									value: clean($tds.eq(1).text())
+								});
+							}else if ($tds.length === 4) {
+								resp.push({
+									name: clean($tds.eq(0).text()),
+									value: clean($tds.eq(1).text())
+								});
 								resp.push({
 									name: clean($tds.eq(2).text()),
 									value: clean($tds.eq(3).text())
 								});
 							}
 						});
-						
+
 						var entity = {};
 
 						for(var i = 0; i < resp.length; i++){
 	                        var item = resp[i];
-	                          if(item.name.indexOf('Número de RUC') !== -1){
+	                          if(item.name.indexOf('RUC') !== -1){
 	                            var split = item.value.split('-');
 	                            entity.ciu = split[0].trim();
 	                            entity.business_name = split[1].trim();
 	                          }else if(item.name.indexOf('Nombre Comercial') !== -1){
 	                            entity.trade_name = item.value.trim();
-	                          }else if(item.name.indexOf('Dirección del Domicilio Fiscal') !== -1){
+	                          }else if(item.name.indexOf('Domicilio Fiscal') !== -1){
 	                          	entity.address = item.value.trim().split("-").map(function (splited) {return splited.trim();}).join("-");
-	                          }else if(item.name.indexOf('Dirección del Domicilio Fiscal') !== -1){
+	                          }else if(item.name.indexOf('Estado') !== -1){
+	                          	entity.status = item.value.trim();
+	                          }else if(item.name.indexOf('Condic') !== -1){
+								entity.condition = item.value.trim();
 	                          }
 	                     }
 
