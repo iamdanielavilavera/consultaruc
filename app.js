@@ -26,6 +26,7 @@ app.post('/', (req, res) => {
 		});
 	}else{
 		request(urlCode, (err, response, code) => {
+			console.log(!err && response.statusCode, code);
 			if (!err && response.statusCode == 200) {
 				const formData = {
 					nroRuc: req.body.ruc,
@@ -36,6 +37,7 @@ app.post('/', (req, res) => {
 					url: urlPost,
 					form: formData
 				}, (err, response, body) => {
+					console.log(!err && response.statusCode, formData, body);
 					if (!err && response.statusCode == 200) {
 						const $ = cheerio.load(body);
 						const $table = $(".form-table").eq(2); // este es el bloque de la versión imprimible del html
